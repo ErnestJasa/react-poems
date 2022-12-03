@@ -8,7 +8,6 @@ const Home = ()=>{
         category:'',
         search:''
     });
-    const [loading, setLoading] = useState(true);
 
     const handleSearch = (term)=>{
         setSearchTerm(term)
@@ -25,27 +24,52 @@ const Home = ()=>{
             console.log(msg)
         }
         }
-    },[searchTerm.category])
+    },[searchTerm])
     console.log('is tevinio', searchTerm)
 
     console.log(poems)
-// const checkLoad = ()=>{
-//         if(poems)
-// }
+    const check = ()=>{
+        if(searchTerm.search){
+            if(poems){
+                if(Array.isArray(poems)){
+                    return (
+                        <div className='row'>
+                            {poems.map(poem =>
+                                <Poem
+                                    title={poem.title}
+                                    author={poem.author}
+                                    lines={poem.lines}
+                                />)}
+                        </div>
+                    )
+                }else{
+                    return (<>
+                            <p>Nerasta</p>
+                        </>
+                    )
+                }
+            }else{
+                return (<>
+                    <p>Loading...</p>
+                </>)
+            }
+        }
+}
 
 
     return(
         <div>
                 <Search searchFunction={handleSearch}/>
-                <div>
-                    {searchTerm.search  && poems?.map(poem =>
-                        <Poem
-                            title={poem.title}
-                            author={poem.author}
-                            lines={poem.lines}
-                        />
-                    )}
-                </div>
+                {/*<div>*/}
+                {/*    {searchTerm.search  && poems?.map(poem =>*/}
+                {/*        <Poem*/}
+                {/*            title={poem.title}*/}
+                {/*            author={poem.author}*/}
+                {/*            lines={poem.lines}*/}
+                {/*        />*/}
+                {/*    )}*/}
+                {/*</div>*/}
+            {check()}
         </div>
     )
 }
